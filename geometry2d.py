@@ -5,7 +5,11 @@ class Point:
 		self.y = y
 
 	def __eq__(self, other):
+		if not isinstance(other, Point): return False
 		return self.x == other.x and self.y == other.y
+
+	def __repr__(self):
+		return '<Point x:{point.x}, y:{point.y}>'.format(point=self)
 
 	def __str__(self):
 		return '({point.x}, {point.y})'.format(point=self)
@@ -16,7 +20,11 @@ class Line:
 		self.slope = 0
 
 	def __eq__(self, other):
+		if not isinstance(other, Line): return False
 		return self.y_intercept == other.y_intercept and self.slope == other.slope
+
+	def __repr__(self):
+		return '<Line y_intercept:{line.y_intercept}, slope:{line.slope}>'.format(line=self)
 
 	def __str__(self):
 		return 'y_intercept={line.y_intercept}, slope={line.slope}'.format(line=self)

@@ -8,18 +8,25 @@ def random_line():
 	result.slope = randint(-20, 20)
 	return result
 
-def generate_graph(line_count):
+def generate_intersections(line_count):
+	intersections = []
 	lines = []
+
 	for i in range(0, line_count):
 		line = random_line()
-		intersection_points = []
 
-		print(line)
 		for old_line in lines:
 			point = intersection_point(line, old_line)
-			intersection_points.append(point)
-			print("\t", point)
+			if point == False:
+				continue
+			intersections.append({
+				'point': point,
+				'from_line': line,
+				'to_line': old_line
+				})
 		lines.append(line)
 
+	return intersections
+
 if __name__ == '__main__':
-	generate_graph(4)
+	print(generate_intersections(4))
