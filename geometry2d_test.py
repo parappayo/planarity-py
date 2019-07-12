@@ -15,6 +15,33 @@ class TestLine(unittest.TestCase):
 		line.slope = 1
 		self.assertEqual(line.value_at_x(3), 3)
 
+class TestIntersection(unittest.TestCase):
+
+	def test_is_valid(self):
+		line1 = geometry2d.Line()
+		line1.y_intercept = 0
+		line1.slope = 1
+
+		line2 = geometry2d.Line()
+		line2.y_intercept = 1
+		line2.slope = 0
+
+		intersection = geometry2d.Intersection(line1, line2)
+		self.assertTrue(intersection.is_valid())
+
+	def test_is_valid_parallel_lines(self):
+
+		line1 = geometry2d.Line()
+		line1.y_intercept = 0
+		line1.slope = 0
+
+		line2 = geometry2d.Line()
+		line2.y_intercept = 1
+		line2.slope = 0
+
+		intersection = geometry2d.Intersection(line1, line2)
+		self.assertFalse(intersection.is_valid())
+
 class TestFunctions(unittest.TestCase):
 
 	def test_intersection_x_parallel_lines(self):

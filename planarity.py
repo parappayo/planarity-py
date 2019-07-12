@@ -8,7 +8,7 @@ def random_line():
 	result.slope = randint(-20, 20)
 	return result
 
-def generate_intersections(line_count):
+def generate_lines_intersections(line_count):
 	intersections = []
 	lines = []
 
@@ -16,17 +16,23 @@ def generate_intersections(line_count):
 		line = random_line()
 
 		for old_line in lines:
-			point = intersection_point(line, old_line)
-			if point == False:
-				continue
-			intersections.append({
-				'point': point,
-				'from_line': line,
-				'to_line': old_line
-				})
+			intersection = Intersection(line, old_line)
+			if intersection.is_valid():
+				intersections.append(intersection)
+
 		lines.append(line)
 
-	return intersections
+	return (lines, intersections)
+
+def find_points_along_line(line, intersections):
+	intersections_on_line = filter(lambda x: x.is_on_line(line), intersections)
+	points_on_line = map(lambda x: x.point, intersections_on_line)
+	return list(points_on_line)
 
 if __name__ == '__main__':
-	print(generate_intersections(4))
+	lines, intersections = generate_lines_intersections(4)
+	print("lines: ", lines)
+	print("intersections: ", intersections)
+	for line in lines:
+		points_on_line = find_points_along_line(line, intersections)
+		print("points on line: ", line, points_on_line)
