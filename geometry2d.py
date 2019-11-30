@@ -8,6 +8,9 @@ class Point:
 		if not isinstance(other, Point): return False
 		return self.x == other.x and self.y == other.y
 
+	def __hash__(self):
+		return hash((self.x, self.y))
+
 	def __repr__(self):
 		return '<Point x:{point.x:.2f}, y:{point.y:.2f}>'.format(point=self)
 

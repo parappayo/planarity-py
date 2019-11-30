@@ -34,9 +34,25 @@ def find_points_along_line(line, intersections):
 	points_on_line = map(lambda x: x.point, intersections_on_line)
 	return list(points_on_line)
 
-def draw_line(surface, line):
-	start_pos = (0, line.y_intercept)
-	end_pos = (screen_size[0], line.value_at_x(screen_size[0]))
+def find_point_neighbour_pairs(lines):
+	points = []
+	connections = []
+
+	for line in lines:
+		points_on_line = find_points_along_line(line, intersections)
+
+		previous_point = False
+		for point in points_on_line:
+			points.append(point)
+			if previous_point:
+				connections.append((previous_point, point))
+			previous_point = point
+
+	return set(points), connections
+
+def draw_line(surface, from_point, to_point):
+	start_pos = (from_point.x, from_point.y)
+	end_pos = (to_point.x, to_point.y)
 	width = 4
 	colour = 220, 220, 220
 	pygame.draw.line(surface, colour, start_pos, end_pos, width)
@@ -50,14 +66,14 @@ def draw_point(surface, point):
 	pygame.draw.circle(surface, inner_colour, center, radius)
 	pygame.draw.circle(surface, outer_colour, center, radius, border_thickness)
 
-def draw_frame(surface, lines, intersections):
-	for line in lines:
-		draw_line(surface, line)
+def draw_frame(surface, points, connections):
+	for connection in connections:
+		draw_line(surface, connection[0], connection[1])
 
-	for intersection in intersections:
-		draw_point(surface, intersection.point)
+	for point in points:
+		draw_point(surface, point)
 
-def game_loop(lines, intersections):
+def game_loop(points, connections):
 	pygame.init()
 
 	screen = pygame.display.set_mode(screen_size)
@@ -68,15 +84,16 @@ def game_loop(lines, intersections):
 				sys.exit()
 
 		screen.fill(background_colour)
-		draw_frame(screen, lines, intersections)
+		draw_frame(screen, points, connections)
 		pygame.display.flip()
 
 if __name__ == '__main__':
 	lines, intersections = generate_lines_intersections(4)
+	points, connections = find_point_neighbour_pairs(lines)
+
 	print("lines: ", lines)
 	print("intersections: ", intersections)
-	for line in lines:
-		points_on_line = find_points_along_line(line, intersections)
-		print("points on line: ", line, points_on_line)
+	print("points: ", points)
+	print("connections: ", connections)
 
-	game_loop(lines, intersections)
+	game_loop(points, connections)
