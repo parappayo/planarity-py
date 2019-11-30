@@ -12,7 +12,7 @@ def arrange_in_circle(points):
 	for point in points:
 		point.x = (math.cos(theta) + 1) * screen_size[0] / 2
 		point.y = (math.sin(theta) + 1) * screen_size[1] / 2
-		theta = theta + theta_step
+		theta += theta_step
 
 def draw_line(surface, from_point, to_point):
 	start_pos = (from_point.x, from_point.y)

@@ -1,18 +1,36 @@
 from random import *
 from geometry2d import *
 
-def random_line():
+def uniq_rand_int(lowest, highest, used_values, max_retries):
+	result = randint(lowest, highest)
+
+	loop_count = 0
+	while result in used_values:
+		result = randint(lowest, highest)
+		loop_count += 1
+
+		if loop_count > max_retries:
+			print("warning: failed to generate unique random int")
+			break
+
+	used_values[result] = True
+	return result
+
+def random_line(used_y_intercepts, used_slopes):
 	result = Line()
-	result.y_intercept = randint(100, 600)
-	result.slope = randint(-20, 20)
+	result.y_intercept = uniq_rand_int(-1000, 1000, used_y_intercepts, 100)
+	result.slope = uniq_rand_int(-200, 200, used_slopes, 100)
 	return result
 
 def generate_lines_intersections(line_count):
 	intersections = []
 	lines = []
 
+	used_y_intercepts = {}
+	used_slopes = {}
+
 	for i in range(0, line_count):
-		line = random_line()
+		line = random_line(used_y_intercepts, used_slopes)
 
 		for old_line in lines:
 			intersection = Intersection(line, old_line)
