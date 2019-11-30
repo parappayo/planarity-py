@@ -1,5 +1,5 @@
 
-import sys, pygame
+import sys, math, pygame
 
 from random import *
 from geometry2d import *
@@ -50,6 +50,14 @@ def find_point_neighbour_pairs(lines):
 
 	return set(points), connections
 
+def arrange_in_circle(points):
+	theta = 0
+	theta_step = (2 * math.pi) / len(points)
+	for point in points:
+		point.x = (math.cos(theta) + 1) * screen_size[0] / 2
+		point.y = (math.sin(theta) + 1) * screen_size[1] / 2
+		theta = theta + theta_step
+
 def draw_line(surface, from_point, to_point):
 	start_pos = (from_point.x, from_point.y)
 	end_pos = (to_point.x, to_point.y)
@@ -90,6 +98,8 @@ def game_loop(points, connections):
 if __name__ == '__main__':
 	lines, intersections = generate_lines_intersections(4)
 	points, connections = find_point_neighbour_pairs(lines)
+
+	arrange_in_circle(points)
 
 	print("lines: ", lines)
 	print("intersections: ", intersections)
