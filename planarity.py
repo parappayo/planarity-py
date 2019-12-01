@@ -1,10 +1,15 @@
 
-import sys, math, pygame
+import sys, time, math, pygame
 
 from level_generator import *
 
 background_colour = 0, 0, 0 # rgb 256
 screen_size = 1024, 768 # pixels
+
+class GameState:
+	def __init__(self, points, connections):
+		self.points = points
+		self.connections = connections
 
 def arrange_in_circle(points):
 	theta = 0
@@ -30,28 +35,55 @@ def draw_point(surface, point):
 	pygame.draw.circle(surface, inner_colour, center, radius)
 	pygame.draw.circle(surface, outer_colour, center, radius, border_thickness)
 
-def draw_frame(surface, points, connections):
-	for connection in connections:
+def draw_frame(surface, game_state):
+	surface.fill(background_colour)
+
+	for connection in game_state.connections:
 		draw_line(surface, connection[0], connection[1])
 
-	for point in points:
+	for point in game_state.points:
 		draw_point(surface, point)
 
-def game_loop(points, connections):
+	pygame.display.flip()
+
+def on_quit(event, game_state):
+	sys.exit()
+
+def on_key_down(event, game_state):
+	if event.key == pygame.K_ESCAPE:
+		sys.exit()
+
+def on_mouse_down(event, game_state):
+	print("debug: mouse down at {p[0]}, {p[1]}".format(p=event.pos))
+
+def on_mouse_up(event, game_state):
+	print("debug: mouse up at {p[0]}, {p[1]}".format(p=event.pos))
+
+def handle_input_events(input_event_handlers, game_state):
+	for event in pygame.event.get():
+		if not event.type in input_event_handlers:
+			continue
+		input_event_handlers[event.type](event, game_state)
+
+def game_loop(game_state):
+	input_event_handlers = {
+		pygame.QUIT: on_quit,
+		pygame.KEYDOWN: on_key_down,
+		pygame.MOUSEBUTTONDOWN: on_mouse_down,
+		pygame.MOUSEBUTTONUP: on_mouse_up
+	}
+
 	pygame.init()
 
 	screen = pygame.display.set_mode(screen_size)
 
 	while True:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				sys.exit()
-
-		screen.fill(background_colour)
-		draw_frame(screen, points, connections)
-		pygame.display.flip()
+		handle_input_events(input_event_handlers, game_state)
+		draw_frame(screen, game_state)
+		sys.stdout.flush()
+		time.sleep(0.05) # cap at 20 fps
 
 if __name__ == '__main__':
 	points, connections = generate_level(5)
 	arrange_in_circle(points)
-	game_loop(points, connections)
+	game_loop(GameState(points, connections))
