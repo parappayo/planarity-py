@@ -1,7 +1,6 @@
-
 import sys, time, math, pygame
 
-from level_generator import *
+import level_generator
 
 background_colour = 0, 0, 0 # rgb 256
 screen_size = 1024, 768 # pixels
@@ -99,6 +98,6 @@ def game_loop(game_state):
 		time.sleep(0.05) # cap at 20 fps
 
 if __name__ == '__main__':
-	points, connections = generate_level(5)
+	points, connections = level_generator.generate_level(5)
 	arrange_in_circle(points)
 	game_loop(GameState(points, connections))

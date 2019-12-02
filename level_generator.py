@@ -1,8 +1,9 @@
-from random import *
-from geometry2d import *
+import random
+
+from geometry2d import Point, Line, Intersection
 
 def uniq_rand_int(lowest, highest, used_values, max_retries):
-	result = randint(lowest, highest)
+	result = random.randint(lowest, highest)
 
 	loop_count = 0
 	while result in used_values:
