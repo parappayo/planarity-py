@@ -1,3 +1,4 @@
+import math
 
 class Point:
 	def __init__(self, x, y):
@@ -16,6 +17,17 @@ class Point:
 
 	def __str__(self):
 		return '({point.x:.2f}, {point.y:.2f})'.format(point=self)
+
+def slope(point1, point2):
+	dx = (point2.x - point1.x)
+	return (point2.y - point1.y) / dx if dx != 0 else math.nan
+
+def slow_is_clockwise(point1, point2, point3):
+	"""Reference implementation; easy to grok, but does unnecessary branches and divides."""
+	return slope(point1, point2) > slope(point1, point3)
+
+def is_clockwise(point1, point2, point3):
+	return (point2.y - point1.y) * (point3.x - point1.x) > (point3.y - point1.y) * (point2.x - point1.x)
 
 class Line:
 	def __init__(self):

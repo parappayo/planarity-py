@@ -1,11 +1,11 @@
 
-import unittest
+import unittest, math
 import geometry2d
 
 class TestPoint(unittest.TestCase):
 
 	def test_str(self):
-		self.assertEqual(str(geometry2d.Point(1, 2)), "(1, 2)")
+		self.assertEqual(str(geometry2d.Point(1, 2)), "(1.00, 2.00)")
 
 class TestLine(unittest.TestCase):
 
@@ -43,6 +43,47 @@ class TestIntersection(unittest.TestCase):
 		self.assertFalse(intersection.is_valid())
 
 class TestFunctions(unittest.TestCase):
+
+	def test_slope(self):
+		tests = [
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  0), 0),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  1), 1),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  3), 3),
+			(geometry2d.Point( 0,  0), geometry2d.Point(-1,  3), -3),
+			(geometry2d.Point( 0,  0), geometry2d.Point(-1, -3), 3),
+			(geometry2d.Point( 1,  1), geometry2d.Point( 2,  2), 1),
+			(geometry2d.Point(-1, -1), geometry2d.Point(-2, -2), 1),
+			(geometry2d.Point( 1,  1), geometry2d.Point( 2, -2), -3),
+		]
+
+		for test in tests:
+			with self.subTest(test=test):
+				point1, point2, expected = test
+				self.assertTrue(math.isnan(geometry2d.slope(point1, point1)))
+				self.assertEqual(geometry2d.slope(point1, point2), expected)
+				self.assertEqual(geometry2d.slope(point2, point1), expected)
+
+	def test_is_clockwise(self):
+		tests = [
+			(geometry2d.Point( 0,  0), geometry2d.Point( 0,  0), geometry2d.Point( 0,  0), False),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 0,  0), geometry2d.Point( 1,  1), False),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 0,  0), geometry2d.Point( 1, -1), False),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  1), geometry2d.Point( 0,  0), False),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1, -1), geometry2d.Point( 0,  0), False),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  0), geometry2d.Point( 1,  -1), True),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  0), geometry2d.Point( 1,  1), False),
+			(geometry2d.Point( 1,  1), geometry2d.Point( 1,  0), geometry2d.Point( 0,  0), True),
+			(geometry2d.Point( 5,  5), geometry2d.Point( 6,  4), geometry2d.Point( 5,  3), True),
+			(geometry2d.Point( 5,  5), geometry2d.Point( 6,  4), geometry2d.Point( 7,  3), False),
+		]
+
+		for test in tests:
+			with self.subTest(test=test):
+				point1, point2, point3, expected = test
+				self.assertEqual(
+					geometry2d.is_clockwise(point1, point2, point3),
+					geometry2d.slow_is_clockwise(point1, point2, point3))
+				self.assertEqual(geometry2d.is_clockwise(point1, point2, point3), expected)
 
 	def test_intersection_x_parallel_lines(self):
 		line1 = geometry2d.Line()
