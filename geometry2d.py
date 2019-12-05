@@ -20,10 +20,13 @@ class Point:
 
 def slope(point1, point2):
 	dx = (point2.x - point1.x)
-	return (point2.y - point1.y) / dx if dx != 0 else math.nan
+	if dx == 0:
+		return math.nan
+	return (point2.y - point1.y) / dx
 
 def slow_is_clockwise(point1, point2, point3):
-	"""Reference implementation; easy to grok, but does unnecessary branches and divides."""
+	"""Reference implementation; easy to grok, but does unnecessary branches and divides.
+	Handling of edge cases where points share an x-coordinate is different than is_clockwise."""
 	return slope(point1, point2) > slope(point1, point3)
 
 def is_clockwise(point1, point2, point3):
