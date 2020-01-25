@@ -21,7 +21,10 @@ class GameState:
 	def __init__(self):
 		self.points = False
 		self.connections = False
+
 		self.mouse_drag_target = False
+		self.level_complete = False
+		self.last_found_collision = (False, False)
 
 		self.background_colour = 0, 0, 0 # rgb 256
 		self.screen_size = 1024, 768 # pixels
@@ -36,3 +39,14 @@ class GameState:
 
 	def find_point_from_pos(self, pos):
 		return find_point_from_pos(self.points, pos, self.point_radius)
+
+	def check_win_condition(self):
+		for connection1 in self.connections:
+			for connection2 in self.connections:
+				if connection1 == connection2:
+					continue
+				if connection1.intersects(connection2):
+					self.last_found_collision = (connection1, connection2)
+					return
+		self.last_found_collision = (False, False)
+		self.level_complete = True

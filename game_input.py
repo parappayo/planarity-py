@@ -12,6 +12,7 @@ def on_mouse_down(event, game):
 
 def on_mouse_up(event, game):
 	game.mouse_drag_target = False
+	game.check_win_condition()
 
 def on_mouse_move(event, game):
 	target = game.mouse_drag_target

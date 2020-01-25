@@ -5,6 +5,7 @@ import game_state, game_input, game_draw
 def game_loop(game):
 	pygame.init()
 	screen = pygame.display.set_mode(game.screen_size)
+	pygame.display.set_caption("Planarity")
 
 	while True:
 		game_input.handle_events(pygame.event.get(), game)

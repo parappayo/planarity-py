@@ -86,7 +86,17 @@ class LineSegment:
 	def __str__(self):
 		return '(point1={line.point1}, point2={line.point2})'.format(line=self)
 
+	def slope(self):
+		return slope(self.point1, self.point2)
+
+	def shares_point(self, other):
+		return (self.point1 == other.point1) or (self.point1 == other.point2) or (self.point2 == other.point1) or (self.point2 == other.point2)
+
 	def intersects(self, other):
+		if self.shares_point(other):
+			# not correct but enough for a decent game of Planarity
+			return False
+
 		return ((is_clockwise(self.point1, other.point1, other.point2) !=
 				is_clockwise(self.point2, other.point1, other.point2)) and
 			(is_clockwise(self.point1, self.point2, other.point1) !=

@@ -1,6 +1,6 @@
 import random
 
-from geometry2d import Point, Line, Intersection
+from geometry2d import Point, Line, LineSegment, Intersection
 
 def uniq_rand_int(lowest, highest, used_values, max_retries):
 	result = random.randint(lowest, highest)
@@ -58,7 +58,7 @@ def find_point_neighbour_pairs(lines, intersections):
 		for point in points_on_line:
 			points.append(point)
 			if previous_point:
-				connections.append((previous_point, point))
+				connections.append(LineSegment(previous_point, point))
 			previous_point = point
 
 	return set(points), connections

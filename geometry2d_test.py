@@ -19,12 +19,6 @@ class TestLineSegment(unittest.TestCase):
 
 	def test_intersects(self):
 		tests = [
-			# parallel lines are a case that fails
-			# (geometry2d.LineSegment(
-			# 	geometry2d.Point(1, 1), geometry2d.Point(1, 2)),
-			# geometry2d.LineSegment(
-			# 	geometry2d.Point(0, 1), geometry2d.Point(1.5, 1)),
-			# True),
 			(geometry2d.LineSegment(
 				geometry2d.Point(1, 1), geometry2d.Point(1, 2)),
 			geometry2d.LineSegment(
@@ -41,11 +35,6 @@ class TestLineSegment(unittest.TestCase):
 				geometry2d.Point(2, 2), geometry2d.Point(2, 2)),
 			False),
 			(geometry2d.LineSegment(
-				geometry2d.Point(1, 1), geometry2d.Point(2, 1)),
-			geometry2d.LineSegment(
-				geometry2d.Point(2, 1), geometry2d.Point(2, 2)),
-			False),
-			(geometry2d.LineSegment(
 				geometry2d.Point(0, 0), geometry2d.Point(-1, 0)),
 			geometry2d.LineSegment(
 				geometry2d.Point(0, 1), geometry2d.Point(-1, 1)),
@@ -59,7 +48,31 @@ class TestLineSegment(unittest.TestCase):
 				geometry2d.Point(0, 0), geometry2d.Point(-1, 0.5)),
 			geometry2d.LineSegment(
 				geometry2d.Point(0, 1), geometry2d.Point(-1, 1)),
+			False),
+
+			# shares point tests
+			(geometry2d.LineSegment(
+				geometry2d.Point(1, 1), geometry2d.Point(2, 1)),
+			geometry2d.LineSegment(
+				geometry2d.Point(2, 1), geometry2d.Point(2, 2)),
+			False),
+			(geometry2d.LineSegment(
+				geometry2d.Point(6, 5), geometry2d.Point(7, 0)),
+			geometry2d.LineSegment(
+				geometry2d.Point(7, 0), geometry2d.Point(2, 0)),
 			False)
+
+			# parallel lines tests
+			# (geometry2d.LineSegment(
+			# 	geometry2d.Point(1, 1), geometry2d.Point(1, 2)),
+			# geometry2d.LineSegment(
+			# 	geometry2d.Point(1, 2), geometry2d.Point(1, 1.5)),
+			# True),
+			# (geometry2d.LineSegment(
+			# 	geometry2d.Point(1, 1), geometry2d.Point(1, 2)),
+			# geometry2d.LineSegment(
+			# 	geometry2d.Point(1, 2), geometry2d.Point(1, 3)),
+			# False)
 		]
 
 		for test in tests:
