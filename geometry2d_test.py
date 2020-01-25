@@ -15,6 +15,53 @@ class TestLine(unittest.TestCase):
 		line.slope = 1
 		self.assertEqual(line.value_at_x(3), 3)
 
+class TestLineSegment(unittest.TestCase):
+
+	def test_intersects(self):
+		tests = [
+			(geometry2d.LineSegment(
+				geometry2d.Point(1, 1), geometry2d.Point(1, 2)),
+			geometry2d.LineSegment(
+				geometry2d.Point(2, 1), geometry2d.Point(2, 2)),
+			False),
+			(geometry2d.LineSegment(
+				geometry2d.Point(1, 1), geometry2d.Point(2, 2)),
+			geometry2d.LineSegment(
+				geometry2d.Point(2, 1), geometry2d.Point(1, 2)),
+			True),
+			(geometry2d.LineSegment(
+				geometry2d.Point(1, 1), geometry2d.Point(1, 1)),
+			geometry2d.LineSegment(
+				geometry2d.Point(2, 2), geometry2d.Point(2, 2)),
+			False),
+			(geometry2d.LineSegment(
+				geometry2d.Point(1, 1), geometry2d.Point(2, 1)),
+			geometry2d.LineSegment(
+				geometry2d.Point(2, 1), geometry2d.Point(2, 2)),
+			True),
+			(geometry2d.LineSegment(
+				geometry2d.Point(0, 0), geometry2d.Point(-1, 0)),
+			geometry2d.LineSegment(
+				geometry2d.Point(0, 1), geometry2d.Point(-1, 1)),
+			False),
+			(geometry2d.LineSegment(
+				geometry2d.Point(0, 0), geometry2d.Point(-1, 5)),
+			geometry2d.LineSegment(
+				geometry2d.Point(0, 1), geometry2d.Point(-1, 1)),
+			True),
+			(geometry2d.LineSegment(
+				geometry2d.Point(0, 0), geometry2d.Point(-1, 0.5)),
+			geometry2d.LineSegment(
+				geometry2d.Point(0, 1), geometry2d.Point(-1, 1)),
+			False)
+		]
+
+		for test in tests:
+			with self.subTest(test=test):
+				line1, line2, expected = test
+			self.assertEqual(line1.intersects(line2), expected)
+			self.assertEqual(line2.intersects(line1), expected)
+
 class TestIntersection(unittest.TestCase):
 
 	def test_is_valid(self):
@@ -76,7 +123,7 @@ class TestFunctions(unittest.TestCase):
 			(geometry2d.Point( 0,  0), geometry2d.Point( 0,  0), geometry2d.Point( 1, -1), False),
 			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  1), geometry2d.Point( 0,  0), False),
 			(geometry2d.Point( 0,  0), geometry2d.Point( 1, -1), geometry2d.Point( 0,  0), False),
-			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  0), geometry2d.Point( 1  -1), True),
+			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  0), geometry2d.Point( 1, -1), True),
 			(geometry2d.Point( 0,  0), geometry2d.Point( 1,  0), geometry2d.Point( 1,  1), False),
 			(geometry2d.Point( 1,  1), geometry2d.Point( 1,  0), geometry2d.Point( 0,  0), True),
 			(geometry2d.Point( 5,  5), geometry2d.Point( 6,  4), geometry2d.Point( 5,  3), True),

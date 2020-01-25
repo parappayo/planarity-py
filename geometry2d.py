@@ -64,6 +64,30 @@ def intersection_point(line1, line2):
 	y = line1.value_at_x(x)
 	return Point(x, y)
 
+class LineSegment:
+	def __init__(self, point1, point2):
+		self.point1 = point1
+		self.point2 = point2
+
+	def __eq__(self, other):
+		if not isinstance(other, LineSegment): return False
+		return self.point1 == other.point1 and self.point2 == other.point2
+
+	def __repr__(self):
+		return '<LineSegment point1:{line.point1}, point2:{line.point2}>'.format(line=self)
+
+	def __str__(self):
+		return '(point1={line.point1}, point2={line.point2})'.format(line=self)
+
+	def intersects(self, other):
+		if (self.point1 == other.point1 or self.point1 == other.point2 or
+			self.point2 == other.point1 or self.point2 == other.point2):
+			return True
+		return ((is_clockwise(self.point1, other.point1, other.point2) !=
+				is_clockwise(self.point2, other.point1, other.point2)) and
+			(is_clockwise(self.point1, self.point2, other.point1) !=
+				is_clockwise(self.point1, self.point2, other.point2)))
+
 class Intersection:
 	def __init__(self, from_line, to_line):
 		self.point = intersection_point(from_line, to_line)
