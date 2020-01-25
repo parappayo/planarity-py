@@ -18,6 +18,9 @@ class Point:
 	def __str__(self):
 		return '({point.x:.2f}, {point.y:.2f})'.format(point=self)
 
+	def as_tuple(self):
+		return (self.x, self.y)
+
 def slope(point1, point2):
 	dx = (point2.x - point1.x)
 	if dx == 0:
@@ -69,6 +72,10 @@ class LineSegment:
 		self.point1 = point1
 		self.point2 = point2
 
+	def __getitem__(self, index):
+		if index == 0: return self.point1
+		if index == 1: return self.point2
+
 	def __eq__(self, other):
 		if not isinstance(other, LineSegment): return False
 		return self.point1 == other.point1 and self.point2 == other.point2
@@ -80,9 +87,6 @@ class LineSegment:
 		return '(point1={line.point1}, point2={line.point2})'.format(line=self)
 
 	def intersects(self, other):
-		if (self.point1 == other.point1 or self.point1 == other.point2 or
-			self.point2 == other.point1 or self.point2 == other.point2):
-			return True
 		return ((is_clockwise(self.point1, other.point1, other.point2) !=
 				is_clockwise(self.point2, other.point1, other.point2)) and
 			(is_clockwise(self.point1, self.point2, other.point1) !=
