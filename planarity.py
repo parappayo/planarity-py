@@ -9,6 +9,7 @@ import game_state
 
 def game_loop(game):
     pygame.init()
+    game_draw.init(game)
     screen = pygame.display.set_mode(game.screen_size)
     pygame.display.set_caption("Planarity")
 
