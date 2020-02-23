@@ -26,17 +26,21 @@ def draw_point(surface, game, point):
     surface.blit(pip_surface, dest_rect)
 
 
-def create_pip(game):
-    transparent_color = 0, 0, 0
+def draw_pip(surface, game, point):
     inner_colour = 160, 160, 220
     outer_colour = 220, 220, 220
     border_thickness = 4
-    size = int(game.point_radius * 2 + border_thickness)
+    pygame.draw.circle(surface, inner_colour, point, game.point_radius)
+    pygame.draw.circle(surface, outer_colour, point, game.point_radius, border_thickness)
+
+
+def create_pip(game):
+    transparent_color = 0, 0, 0
+    size = int(game.point_radius * 2)
     center = size // 2, size // 2
     surface = pygame.Surface((size, size), pygame.HWSURFACE)
     surface.set_colorkey(transparent_color)
-    pygame.draw.circle(surface, inner_colour, center, game.point_radius)
-    pygame.draw.circle(surface, outer_colour, center, game.point_radius, border_thickness)
+    draw_pip(surface, game, center)
     return surface
 
 
