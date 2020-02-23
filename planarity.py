@@ -9,14 +9,16 @@ import game_state
 
 def game_loop(game):
     pygame.init()
+    game_draw.init(game)
     screen = pygame.display.set_mode(game.screen_size)
     pygame.display.set_caption("Planarity")
 
     while True:
         game_input.handle_events(pygame.event.get(), game)
-        game_draw.draw_frame(screen, game)
-        sys.stdout.flush()
-        time.sleep(0.05)  # cap at 20 fps
+        if game.redraw_required:
+            game_draw.draw_frame(screen, game)
+            game.redraw_required = False
+        time.sleep(0.001)
 
 
 if __name__ == '__main__':

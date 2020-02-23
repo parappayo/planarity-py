@@ -1,6 +1,15 @@
 import pygame
 
+pip_surface = False
 level_complete_text = False
+
+
+def init(game):
+    global pip_surface
+    pip_surface = create_pip(game)
+
+    global level_complete_text
+    level_complete_text = create_level_complete_text()
 
 
 def draw_line(surface, game, line_segment):
@@ -12,19 +21,36 @@ def draw_line(surface, game, line_segment):
 
 
 def draw_point(surface, game, point):
+    dest_rect = pip_surface.get_rect()
+    dest_rect.center = int(point.x), int(point.y)
+    surface.blit(pip_surface, dest_rect)
+
+
+def draw_pip(surface, game, point):
     inner_colour = 160, 160, 220
     outer_colour = 220, 220, 220
     border_thickness = 4
-    center = int(point.x), int(point.y)
-    pygame.draw.circle(surface, inner_colour, center, game.point_radius)
-    pygame.draw.circle(surface, outer_colour, center, game.point_radius, border_thickness)
+    pygame.draw.circle(surface, inner_colour, point, game.point_radius)
+    pygame.draw.circle(surface, outer_colour, point, game.point_radius, border_thickness)
+
+
+def create_pip(game):
+    transparent_color = 0, 0, 0
+    size = int(game.point_radius * 2)
+    center = size // 2, size // 2
+    surface = pygame.Surface((size, size), pygame.HWSURFACE)
+    surface.set_colorkey(transparent_color)
+    draw_pip(surface, game, center)
+    return surface
 
 
 def create_level_complete_text():
     text_color = 0, 255, 0
     background_colour = 0, 0, 0
     font = pygame.font.Font(pygame.font.get_default_font(), 32)
-    return font.render('Level Complete', True, text_color, background_colour)
+    surface = font.render('Level Complete', True, text_color, background_colour)
+    surface.set_colorkey(background_colour)
+    return surface
 
 
 def draw_frame(surface, game):
@@ -37,9 +63,6 @@ def draw_frame(surface, game):
         draw_point(surface, game, point)
 
     if game.level_complete:
-        global level_complete_text
-        if not level_complete_text:
-            level_complete_text = create_level_complete_text()
         dest_rect = level_complete_text.get_rect()
         dest_rect.center = (game.screen_size[0] // 2, game.screen_size[1] // 2)
         surface.blit(level_complete_text, dest_rect)

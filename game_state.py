@@ -25,6 +25,7 @@ class GameState:
         self.points = False
         self.connections = False
 
+        self.redraw_required = False
         self.mouse_drag_target = False
         self.level_complete = False
         self.last_found_collision = (False, False)
@@ -39,11 +40,14 @@ class GameState:
 
     def arrange_in_circle(self):
         arrange_in_circle(self.points, self.screen_size)
+        self.redraw_required = True
 
     def find_point_from_pos(self, pos):
         return find_point_from_pos(self.points, pos, self.point_radius)
 
     def check_win_condition(self):
+        if self.level_complete:
+            return
         for connection1 in self.connections:
             for connection2 in self.connections:
                 if connection1 == connection2:
@@ -53,3 +57,4 @@ class GameState:
                     return
         self.last_found_collision = (False, False)
         self.level_complete = True
+        self.redraw_required = True
