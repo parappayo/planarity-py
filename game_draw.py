@@ -41,11 +41,12 @@ def create_pip(game):
 
 
 def create_level_complete_text():
-    # TODO: set_colorkey for transparency
     text_color = 0, 255, 0
     background_colour = 0, 0, 0
     font = pygame.font.Font(pygame.font.get_default_font(), 32)
-    return font.render('Level Complete', True, text_color, background_colour)
+    surface = font.render('Level Complete', True, text_color, background_colour)
+    surface.set_colorkey(background_colour)
+    return surface
 
 
 def draw_frame(surface, game):
