@@ -23,6 +23,7 @@ def on_mouse_move(event, game):
     target = game.mouse_drag_target
     if target:
         target.x, target.y = event.pos
+        game.redraw_required = True
 
 
 event_handlers = {
