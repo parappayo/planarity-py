@@ -1,5 +1,5 @@
 
-# Planarity (Python Version)
+# planarity-py
 
 [Planarity](https://en.wikipedia.org/wiki/Planarity) is a graph geometry game, [originally implemented in Flash](http://planarity.net/) by John Tantalo, based on a concept by Mary Radcliffe.
 
@@ -17,3 +17,21 @@ Assuming you have [Python 3](https://www.python.org/) and [pipenv](https://pipen
 If you have already installed PyGame into your global environment, then you probably just want,
 
 * `python3 planarity.py`
+
+On Windows, `python3` is often aliased as `py` so try,
+
+* `py planarity.py`
+
+## Further Considerations
+
+I'm working on other Planarity implementations.
+
+* [planarity-qt](https://github.com/parappayo/planarity-qt)
+
+I'm also working on other game clones.
+
+* [hex-py](https://github.com/parappayo/hex-py)
+
+There are alternative tech choices worth considering:
+
+* [pyglet](http://pyglet.org/) adheres more to OpenGL than PyGame
