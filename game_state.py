@@ -3,11 +3,17 @@ import level_generator
 
 
 def arrange_in_circle(points, screen_size):
+    height_ratio = screen_size[1] / screen_size[0]
+    center_x = screen_size[0] / 2
+    center_y = screen_size[1] / 2
+    width = screen_size[0] * height_ratio / 2.5
+    height = screen_size[1] / 2.5
+
     theta = 0
     theta_step = (2 * math.pi) / len(points)
     for point in points:
-        point.x = (math.cos(theta) + 1) * screen_size[0] / 2
-        point.y = (math.sin(theta) + 1) * screen_size[1] / 2
+        point.x = center_x + math.cos(theta) * width
+        point.y = center_y + math.sin(theta) * height
         theta += theta_step
 
 
