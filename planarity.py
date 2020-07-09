@@ -23,6 +23,5 @@ def game_loop(game):
 
 if __name__ == '__main__':
     main_game = game_state.GameState()
-    main_game.generate_level(5)
-    main_game.arrange_in_circle()
+    main_game.start_level(1)
     game_loop(main_game)

@@ -40,12 +40,11 @@ class GameState:
         self.screen_size = 1024, 768  # pixels
         self.point_radius = 24  # pixels
 
-    def generate_level(self, line_count):
+    def start_level(self, level):
+        line_count = level + 4
         self.points, self.connections = level_generator.generate_level(line_count)
-        self.mouse_drag_target = False
-
-    def arrange_in_circle(self):
         arrange_in_circle(self.points, self.screen_size)
+        self.mouse_drag_target = False
         self.redraw_required = True
 
     def find_point_from_pos(self, pos):
