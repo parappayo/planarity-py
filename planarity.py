@@ -1,6 +1,7 @@
 import pygame, sys, time
 
-import game_draw, game_input, game_state, mouse_drag
+import game_draw, game_input, game_state
+import input_quit, input_mouse_drag
 
 
 def game_loop(game):
