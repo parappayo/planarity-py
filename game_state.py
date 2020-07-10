@@ -2,19 +2,25 @@ import math
 import level_generator
 
 
-def arrange_in_circle(points, screen_size):
-    height_ratio = screen_size[1] / screen_size[0]
-    center_x = screen_size[0] / 2
-    center_y = screen_size[1] / 2
-    width = screen_size[0] * height_ratio / 2.5
-    height = screen_size[1] / 2.5
-
+def circle_points(center, radius, point_count):
     theta = 0
-    theta_step = (2 * math.pi) / len(points)
-    for point in points:
-        point.x = center_x + math.cos(theta) * width
-        point.y = center_y + math.sin(theta) * height
+    theta_step = (2 * math.pi) / point_count
+    for i in range(point_count):
+        yield (center[0] + math.cos(theta) * radius,
+            center[1] + math.sin(theta) * radius)
         theta += theta_step
+
+
+def arrange_in_circle(points, screen_size):
+    dest_points = circle_points(
+            (screen_size[0] / 2, screen_size[1] / 2),
+            screen_size[1] / 2.5,
+            len(points))
+
+    for point in points:
+        dest_point = next(dest_points)
+        point.x = dest_point[0]
+        point.y = dest_point[1]
 
 
 def find_point_from_pos(points, pos, radius):
