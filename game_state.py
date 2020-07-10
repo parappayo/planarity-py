@@ -38,7 +38,6 @@ class GameState:
         self.connections = False
 
         self.redraw_required = False
-        self.mouse_drag_target = False
         self.level_complete = False
         self.last_found_collision = (False, False)
 
@@ -50,7 +49,6 @@ class GameState:
         line_count = level + 4
         self.points, self.connections = level_generator.generate_level(line_count)
         arrange_in_circle(self.points, self.screen_size)
-        self.mouse_drag_target = False
         self.redraw_required = True
 
     def find_point_from_pos(self, pos):
