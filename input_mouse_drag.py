@@ -2,7 +2,7 @@ import pygame
 import game_input
 
 
-mouse_drag_target = None
+mouse_drag_target = False
 
 
 def on_mouse_down(event, game):
