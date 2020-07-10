@@ -10,33 +10,17 @@ def on_key_down(event, game):
         sys.exit()
 
 
-def on_mouse_down(event, game):
-    game.mouse_drag_target = game.find_point_from_pos(event.pos)
-
-
-def on_mouse_up(event, game):
-    game.mouse_drag_target = False
-    game.check_win_condition()
-
-
-def on_mouse_move(event, game):
-    target = game.mouse_drag_target
-    if target:
-        target.x, target.y = event.pos
-        game.redraw_required = True
-
-
-event_handlers = {
-    pygame.QUIT: on_quit,
-    pygame.KEYDOWN: on_key_down,
-    pygame.MOUSEBUTTONDOWN: on_mouse_down,
-    pygame.MOUSEBUTTONUP: on_mouse_up,
-    pygame.MOUSEMOTION: on_mouse_move
-}
+subscribers = [
+    {
+        pygame.QUIT: on_quit,
+        pygame.KEYDOWN: on_key_down
+    }
+]
 
 
 def handle_events(events, game):
-    for event in events:
-        if event.type not in event_handlers:
-            continue
-        event_handlers[event.type](event, game)
+    for event_handlers in subscribers:
+        for event in events:
+            if event.type not in event_handlers:
+                continue
+            event_handlers[event.type](event, game)
