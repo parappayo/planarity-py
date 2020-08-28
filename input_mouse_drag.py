@@ -14,6 +14,7 @@ def on_mouse_up(event, game):
     global mouse_drag_target
     mouse_drag_target = False
     game.check_win_condition()
+    game.redraw_required = True
 
 
 def on_mouse_move(event, game):
