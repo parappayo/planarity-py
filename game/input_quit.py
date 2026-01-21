@@ -1,7 +1,5 @@
 import sys, pygame
 
-from .ui_event import *
-
 
 def on_quit(event, game):
     sys.exit()
@@ -12,7 +10,8 @@ def on_key_down(event, game):
         sys.exit()
 
 
-subscribers.append({
+def QuitHandler():
+    return {
         pygame.QUIT: on_quit,
         pygame.KEYDOWN: on_key_down
-    })
+    }
