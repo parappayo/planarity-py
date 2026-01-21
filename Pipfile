@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-pygame = "==1.9.6"
+pygame = "==2.6.0"
 
 [requires]
-python_version = "3.6"
+python_version = "3.11"
