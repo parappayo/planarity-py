@@ -1,5 +1,6 @@
 import math
-import level_generator
+
+from .level_generator import generate_level
 
 
 def circle_points(center, radius, point_count):
@@ -47,7 +48,7 @@ class GameState:
 
     def start_level(self, level):
         line_count = level + 4
-        self.points, self.connections = level_generator.generate_level(line_count)
+        self.points, self.connections = generate_level(line_count)
         arrange_in_circle(self.points, self.screen_size)
         self.redraw_required = True
 

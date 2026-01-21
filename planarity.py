@@ -1,14 +1,16 @@
 import pygame, sys, time
 
+from planarity import *
 from game import *
-import game_state # TODO: move to package "planarity"
 
 
-def game_loop(game):
+if __name__ == '__main__':
+    game = GameState()
+    game.start_level(1)
+
     pygame.init()
     screen = pygame.display.set_mode(game.screen_size)
     pygame.display.set_caption("Planarity")
-
     graphics = Graphics(screen, game)
 
     input_handler = InputHandler()
@@ -21,9 +23,3 @@ def game_loop(game):
             graphics.draw_frame()
             game.redraw_required = False
         time.sleep(0.001)
-
-
-if __name__ == '__main__':
-    main_game = game_state.GameState()
-    main_game.start_level(1)
-    game_loop(main_game)
