@@ -1,6 +1,6 @@
 import unittest
 import game_state
-from geometry2d import Point
+from geo2d import Point
 
 
 def floats_equal(x, y):

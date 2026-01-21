@@ -12,15 +12,11 @@ There is an [elegant implementation](https://www.jasondavies.com/planarity/) in 
 Assuming you have [Python 3](https://www.python.org/) and [pipenv](https://pipenv-fork.readthedocs.io/en/latest/) installed,
 
 * `pipenv install`
-* `pipenv run python3 planarity.py`
+* `pipenv run python planarity.py`
 
 If you have already installed PyGame into your global environment, then you probably just want,
 
-* `python3 planarity.py`
-
-On Windows, `python3` is often aliased as `py` so try,
-
-* `py planarity.py`
+* `python planarity.py`
 
 ## Further Considerations
 

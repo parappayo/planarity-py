@@ -1,6 +1,6 @@
 import random
 
-from geometry2d import Line, LineSegment, Intersection
+from geo2d import Line, LineSegment, Intersection
 
 
 def uniq_rand_int(lowest, highest, used_values, max_retries):
