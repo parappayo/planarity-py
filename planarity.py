@@ -1,17 +1,15 @@
 import pygame, sys, time
 
 from game import *
-import game.draw as game_draw
-import game.input_quit
-import game.input_mouse_drag
 import game_state # TODO: move to package "planarity"
 
 
 def game_loop(game):
     pygame.init()
-    game_draw.init(game)
     screen = pygame.display.set_mode(game.screen_size)
     pygame.display.set_caption("Planarity")
+
+    graphics = Graphics(screen, game)
 
     input_handler = InputHandler()
     input_handler.add(QuitHandler())
@@ -20,7 +18,7 @@ def game_loop(game):
     while True:
         input_handler.handle_events(pygame.event.get(), game)
         if game.redraw_required:
-            game_draw.draw_frame(screen, game)
+            graphics.draw_frame()
             game.redraw_required = False
         time.sleep(0.001)
 
