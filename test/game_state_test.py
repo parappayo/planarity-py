@@ -1,6 +1,7 @@
 import unittest
-import game_state
-from geo2d import Point
+
+from planarity import *
+from geo2d.point import Point
 
 
 def floats_equal(x, y):
@@ -20,7 +21,7 @@ class TestFunctions(unittest.TestCase):
 
     def test_circle_4_points(self):
         count = 4
-        points_gen = game_state.circle_points((0, 0), 1, count)
+        points_gen = circle_points((0, 0), 1, count)
         points = [next(points_gen) for i in range(count)]
 
         self.assertEqual(len(points), count)
@@ -43,7 +44,7 @@ class TestFunctions(unittest.TestCase):
         for test in tests:
             with self.subTest(test=test):
                 points, pos, radius, expected = test
-                result = game_state.find_point_from_pos(
+                result = find_point_from_pos(
                     points,
                     pos,
                     radius)

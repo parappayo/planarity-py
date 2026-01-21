@@ -1,6 +1,6 @@
 import pygame, sys, time
 
-from planarity import *
+from planarity.game_state import GameState
 from game import *
 
 
