@@ -12,15 +12,20 @@ There is an [elegant implementation](https://www.jasondavies.com/planarity/) in 
 Assuming you have [Python 3](https://www.python.org/) and [pipenv](https://pipenv-fork.readthedocs.io/en/latest/) installed,
 
 * `pipenv install`
-* `pipenv run python3 planarity.py`
+* `pipenv run python planarity.py`
 
 If you have already installed PyGame into your global environment, then you probably just want,
 
-* `python3 planarity.py`
+* `python planarity.py`
 
-On Windows, `python3` is often aliased as `py` so try,
+## Project Architecture
 
-* `py planarity.py`
+The implementation is separated into modules:
+
+* `geo2d` provides math helpers for 2d geometric primitives such as points and line segments
+* `planarity` contains the core game logic implementation with minimal assumptions about how a user will interact with it
+* `game` takes on the pygame dependencies and provides a graphical user interface for Planarity
+* `test` contains all of the unit tests
 
 ## Further Considerations
 

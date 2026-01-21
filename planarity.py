@@ -1,24 +1,25 @@
 import pygame, sys, time
 
-import game_draw, game_input, game_state
-import input_quit, input_mouse_drag
-
-
-def game_loop(game):
-    pygame.init()
-    game_draw.init(game)
-    screen = pygame.display.set_mode(game.screen_size)
-    pygame.display.set_caption("Planarity")
-
-    while True:
-        game_input.handle_events(pygame.event.get(), game)
-        if game.redraw_required:
-            game_draw.draw_frame(screen, game)
-            game.redraw_required = False
-        time.sleep(0.001)
+from planarity.game_state import GameState
+from game import *
 
 
 if __name__ == '__main__':
-    main_game = game_state.GameState()
-    main_game.start_level(1)
-    game_loop(main_game)
+    game = GameState()
+    game.start_level(1)
+
+    pygame.init()
+    screen = pygame.display.set_mode(game.screen_size)
+    pygame.display.set_caption("Planarity")
+    graphics = Graphics(screen, game)
+
+    input_handler = InputHandler()
+    input_handler.add(QuitHandler())
+    input_handler.add(MouseDragHandler())
+
+    while True:
+        input_handler.handle_events(pygame.event.get(), game)
+        if game.redraw_required:
+            graphics.draw_frame()
+            game.redraw_required = False
+        time.sleep(0.001)
