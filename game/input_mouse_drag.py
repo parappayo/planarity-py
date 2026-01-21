@@ -1,5 +1,6 @@
 import pygame
-import game_input
+
+from .ui_event import *
 
 
 mouse_drag_target = False
@@ -24,7 +25,7 @@ def on_mouse_move(event, game):
         game.redraw_required = True
 
 
-game_input.subscribers.append({
+subscribers.append({
         pygame.MOUSEBUTTONDOWN: on_mouse_down,
         pygame.MOUSEBUTTONUP: on_mouse_up,
         pygame.MOUSEMOTION: on_mouse_move

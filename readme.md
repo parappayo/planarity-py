@@ -18,6 +18,15 @@ If you have already installed PyGame into your global environment, then you prob
 
 * `python planarity.py`
 
+## Project Architecture
+
+The implementation is separated into modules:
+
+* `geo2d` provides math helpers for 2d geometric primitives such as points and line segments
+* `planarity` contains the core game logic implementation with minimal assumptions about how a user will interact with it
+* `game` takes on the pygame dependencies and provides a graphical user interface for Planarity
+* `test` contains all of the unit tests
+
 ## Further Considerations
 
 I'm working on other Planarity implementations.

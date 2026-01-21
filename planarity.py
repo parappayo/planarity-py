@@ -1,7 +1,10 @@
 import pygame, sys, time
 
-import game_draw, game_input, game_state
-import input_quit, input_mouse_drag
+import game.draw as game_draw
+import game.ui_event as game_input
+import game.input_quit
+import game.input_mouse_drag
+import game_state # TODO: move to package "planarity"
 
 
 def game_loop(game):
